@@ -6,9 +6,9 @@ const shortenSchema = new Schema({
     type: String,
     required: true
   },
-  outputText: {
+  outputURL: {
     type: String,
-    // required: true
+    required: true
   }
 })
 

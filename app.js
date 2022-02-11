@@ -1,8 +1,10 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
+const shorten = require('./models/shorten')
 const Shorten = require('./models/shorten')
 
 monogoose = require('./config/mongoose')
+const generateShortURL = require('./models/generate_shortURL')
 
 const app = express()
 const port = 3000
@@ -18,8 +20,16 @@ app.get('/', (req, res) => {
 
 app.post('/shorten', (req, res) => {
   const { url } = req.body
-  return Shorten.create({ inputURL: url })
-    .then(shorten => res.render('show', { url: shorten.inputURL }))
+  Shorten.findOne({ inputURL: url })
+    .lean()
+    .then(shorten => {
+      if (!shorten) {
+        const shortURL = generateShortURL()
+        return Shorten.create({ inputURL: url, outputURL: shortURL })
+          .then(res.render('show', { url: shortURL }))
+      }
+      res.render('show', { url: shorten.outputURL })
+    })
     .catch(error => console.log(error))
 })
 
