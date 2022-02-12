@@ -1,6 +1,5 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
-const shorten = require('./models/shorten')
 const Shorten = require('./models/shorten')
 
 monogoose = require('./config/mongoose')
@@ -13,6 +12,7 @@ app.engine('hbs', exphbs.engine({ defaultLayout: 'main', extname: 'hbs' }))
 app.set('view engine', 'hbs')
 
 app.use(express.urlencoded({ extended: true }))
+app.use(express.static('public'))
 
 app.get('/', (req, res) => {
   res.render('index')
