@@ -33,6 +33,14 @@ app.post('/shorten', (req, res) => {
     .catch(error => console.log(error))
 })
 
+app.get('/:id', (req, res) => {
+  const id = req.params.id
+  Shorten.findOne({ outputURL: id })
+    .lean()
+    .then(shorten => res.redirect(`${shorten.inputURL}`))
+    .catch(error => console.log(error))
+})
+
 app.listen(port, () => {
   console.log(`app is running on http://localhost:${port}`)
 })
