@@ -4,7 +4,7 @@ const link = document.querySelector('#link')
 copy.addEventListener('click', copyLink)
 
 function copyLink() {
-  const content = link.innerText
+  const content = link.textContent
   navigator.clipboard.writeText(content)
 }
 
