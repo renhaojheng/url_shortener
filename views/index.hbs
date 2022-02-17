@@ -4,11 +4,21 @@
     <img src="https://assets-lighthouse.alphacamp.co/uploads/image/file/16716/ExportedContentImage_00.png" class="block"
       style="width: 10rem" alt="card-logo">
   </div>
+  {{#if url}}
+  <div class="card-body mx-5 pb-0">
+    <h3 class="fw-bold">Success! Please use this link:</h3>
+    <a href='./{{url}}' class="d-block fs-5 fw-bold" id="link" style="text-decoration:none">{{origin}}/{{url}}</a>
+  </div>
+  <div class="card-body mx-5 pt-0 d-flex flex-column align-items-center">
+    <button type="submit" class="btn btn-primary btn-lg" id="copy-button">Copy</button>
+  </div>
+  {{else}}
   <div class="card-body mx-auto">
-    <form action="/shorten" class="d-flex flex-column align-items-center py-5" style="width: 40rem; height: 10rem"
+    <form action="/" class="d-flex flex-column align-items-center py-5" style="width: 40rem; height: 10rem"
       method="post">
       <input type="text" class="form-control bg-light mb-3" id="url" placeholder="Input URL here" name="url" required>
       <button type="submit" class="btn btn-outline-primary btn-lg">Shorten</button>
     </form>
   </div>
+  {{/if}}
 </div>

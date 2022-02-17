@@ -7,7 +7,7 @@ router.get('/', (req, res) => {
   res.render('index')
 })
 
-router.post('/shorten', (req, res) => {
+router.post('/', (req, res) => {
   const { url } = req.body
   const origin = req.headers.origin
   Shorten.findOne({ inputURL: url })
@@ -16,9 +16,9 @@ router.post('/shorten', (req, res) => {
       if (!shorten) {
         const shortURL = generateShortURL()
         return Shorten.create({ inputURL: url, outputURL: shortURL })
-          .then(res.render('show', { url: shortURL }))
+          .then(res.render('index', { origin, url: shortURL }))
       }
-      res.render('show', { origin, url: shorten.outputURL })
+      res.render('index', { origin, url: shorten.outputURL })
     })
     .catch(error => console.log(error))
 })
@@ -34,7 +34,8 @@ router.get('/:id', (req, res) => {
           errorURL: req.headers.host + "/" + id,
         })
       }
-      res.redirect(shorten.inputURL)})
+      res.redirect(shorten.inputURL)
+    })
     .catch(error => console.log(error))
 })
 
